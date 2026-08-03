@@ -41,9 +41,9 @@ namespace assignment_2_session_3
                     continue;
                 }
 
-                if (seats[row, col] == 1)
+                if (seats[row, col] == 0)
                 {
-                    seats[row, col] = 0;
+                    seats[row, col] = 1;
                     bookedseats++;
 
                     Console.WriteLine("Seat booked");
