@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace oops1q1
 {
-    using System;
-
-    namespace BankAccountApp
-    {
         class BankAccount
         {
             private string _owner;
@@ -84,4 +80,3 @@ namespace oops1q1
             }
         }
     }
-}
