@@ -1,0 +1,104 @@
+using System;
+
+namespace oops4q1
+{
+    abstract class Notification
+    {
+        private string _receiver;
+        private string _message;
+
+        public string Receiver
+        {
+            get { return _receiver; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("receiver can't be empty");
+                _receiver = value;
+            }
+        }
+
+        public string Message
+        {
+            get { return _message; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("message can't be empty");
+                _message = value;
+            }
+        }
+
+        public Notification(string recipient, string message)
+        {
+            Receiver = recipient;
+            Message = message;
+        }
+
+        public abstract void Send();
+    }
+
+    class EmailNotification : Notification
+    {
+        public EmailNotification(string receiver, string message) : base(receiver, message) { }
+
+        public override void Send()
+        {
+            Console.WriteLine($"sending EMAIL to {Receiver}: {Message}");
+        }
+    }
+
+    class SMSNotification : Notification
+    {
+        public SMSNotification(string receiver, string message) : base(receiver, message) { }
+
+        public override void Send()
+        {
+            Console.WriteLine($"sending SMS to {Receiver}: {Message}");
+        }
+    }
+
+    class PushNotification : Notification
+    {
+        public PushNotification(string receiver, string message) : base(receiver, message) { }
+
+        public override void Send()
+        {
+            Console.WriteLine($"sending push to {Receiver}: {Message}");
+        }
+    }
+
+    class NotificationService
+    {
+        public void Process()
+        {
+            //upcasting
+            Notification n1 = new EmailNotification("judy", "hello");
+            Notification n2 = new SMSNotification("01012345678", "hello");
+            Notification n3 = new PushNotification("device", "hello");
+
+            // Polymorphism
+            n1.Send();
+            n2.Send();
+            n3.Send();
+
+            //downcasting
+            EmailNotification email = (EmailNotification)n1;
+            Console.WriteLine("email message: " + email.Message);
+
+            SMSNotification sms = (SMSNotification)n2;
+            Console.WriteLine("sms message: " + sms.Message);
+
+            PushNotification push = (PushNotification)n3;
+            Console.WriteLine("push message: " + push.Message);
+        }
+    } 
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            NotificationService service = new NotificationService();
+            service.Process();
+        }
+    }
+}
